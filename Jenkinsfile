@@ -49,7 +49,7 @@ pipeline{
         }
          stage('Destroy'){
             input{
-                message "should we continue?"
+                message "should we destroy?"
                 ok "Yes.."
             }
             steps{
