@@ -18,22 +18,24 @@ pipeline{
         }
         stage('Plan'){
             steps{
-                sh 'echo "This is from Plan stage"'
+                sh """
+                    cd 01-vpc
+                    terraform plan
+                """
             }
         }
         stage('Deploy'){
+            input{
+                message "should we continue?"
+                ok "Yes.."
+            }
             steps{
-                sh 'echo "This is from Deploy stage"'
+                sh """
+                    cd 01-vpc
+                    terraform apply -auto-approve
+                """
             }
         }
-         stage('Example') {
-            steps {
-                echo "Hello ${params.PERSON}"
-                echo "Biography: ${params.BIOGRAPHY}"
-                echo "Toggle: ${params.TOGGLE}"
-                echo "Choice: ${params.CHOICE}"
-                echo "Password: ${params.PASSWORD}"
-            }
         }
     }
 }
