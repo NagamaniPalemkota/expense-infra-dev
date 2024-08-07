@@ -36,7 +36,7 @@ pipeline{
         stage('Deploy'){
             when{
                 expression{
-                     params.action == 'destroy'
+                     params.action == 'apply'
                 }
             }
                 
