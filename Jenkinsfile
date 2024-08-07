@@ -5,7 +5,7 @@ pipeline{
     options{
         timeout(time: 30,unit: 'MINUTES')
         disableConcurrentBuilds()
-        //ansiColor('xterm')
+        ansiColor('xterm')
     }
     parameters{
         choice(name: 'action' , choices: ['apply' , 'destroy'], description: 'pick one')
@@ -48,9 +48,10 @@ pipeline{
             }
         }
          stage('Destroy'){
-            input{
-                message "should we destroy?"
-                ok "Yes.."
+            when{
+                expression{
+                     params.action == 'destroy'
+                }
             }
             steps{
                 sh """
