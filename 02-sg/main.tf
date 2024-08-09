@@ -142,6 +142,16 @@ resource "aws_security_group_rule" "backend_vpn_http" {
     source_security_group_id = module.vpn.sg_id # source is from where we're getting traffic
 }
 
+#inbound security group rules allowing traffic to backend from jenkins, nexus created in default vpc(as part of CICD)
+resource "aws_security_group_rule" "backend_tools" {
+    type = "ingress"
+    protocol = "tcp"
+    from_port = 22
+    to_port = 22
+    security_group_id = module.backend.sg_id
+    cidr_blocks = ["172.31.0.0/16"]  # source is from where we're getting traffic
+}
+
 # not required when connecting from web_alb & vpn
 # inbound security group rules allowing traffic to frontend from public
 # resource "aws_security_group_rule" "frontend_public" {
